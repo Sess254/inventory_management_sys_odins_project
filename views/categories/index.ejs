@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <title>Sony Audio Inventory - Categories</title>
+    </head>
+    <body>
+    <h1>Categories</h1>
+    <a href="/categories/new">Add New Category</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% categories.forEach(category => { %>
+            <tr>
+            <td><%= category.name %></td>
+            <td><%= category.id %></td>
+
+            <td><a href="/categories/<%= category.id %>">View</a></td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

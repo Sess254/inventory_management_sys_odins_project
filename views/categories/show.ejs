@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+    <title>Sony Audio Inventory - Products</title>
+    </head>
+    <body>
+    <h1><%= category.name %></h1>
+        <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>description</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% products.forEach(product => { %>
+            <tr>
+            <td><%= product.name %></td>
+            <td><%= product.description %></td>
+            <td>$<%= product.price %></td>
+            <td><%= product.stock %></td>
+            <td><a href="/products/<%= product.id %>">View</a></td>
+            </tr>
+        <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
