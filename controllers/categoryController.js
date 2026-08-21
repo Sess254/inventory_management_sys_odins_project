@@ -92,4 +92,38 @@ exports.update = async (req, res) => {
 };
 
 
-exports.delete = (req, res) => res.send('delete product');
+exports.delete = async (req, res) => {
+    const client = await pool.connect();
+    const categoryId = req.params.id;
+
+    try {
+        await client.query('BEGIN');
+
+        const noCategoryResult = await pool.query('SELECT id FROM category WHERE name = $1', ['No Category']);
+
+        if (noCategoryResult.rows.length === 0) {
+            throw new error('Fallback Category No category  Not found');
+        }
+
+        const noCategoryId = noCategoryResult.rows[0].id;
+
+        if (parseInt(categoryId, 10) === noCategoryId) {
+            await client.query('ROLLBACK');
+            res.status(400).send('Cannot delete fallback category');
+        }
+
+        await client.query('UPDATE product SET category_id = $1 WHERE category_id = $2', [noCategoryId, categoryId]);
+
+        await client.query('DELETE FROM category WHERE id = $1', [categoryId]);
+
+        await client.query('COMMIT');
+
+        res.redirect('/categories');
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error('Error during category deletion transaction:', err);
+        res.status(500).send('Server Error');
+    } finally {
+        client.release();
+    }
+};

@@ -20,6 +20,11 @@
             <td><%= category.id %></td>
             <td><a href="/categories/<%= category.id %>">View</a></td>
             <td><a href="/categories/<%= category.id %>/edit">Edit</a></td>
+            <td>
+                <form action="/categories/<%= category.id %>/delete" method="POST" style="display:inline">
+                    <button>Delete</button>
+                </form>
+            </td>
             </tr>
         <% }) %>
         </tbody>
