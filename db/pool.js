@@ -8,9 +8,12 @@
 //     port: 5432,
 // });
 
-
 const { Pool } = require("pg");
+require("dotenv").config();
 
-module.exports = new Pool({
-  connectionString: "postgresql://sess:sess@localhost:5432/top_users"
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false
 });
+
+module.exports = pool;
