@@ -11,3 +11,13 @@ CREATE TABLE product (
   stock INTEGER NOT NULL CHECK (stock >= 0),
   category_id INTEGER NOT NULL REFERENCES category(id) ON DELETE RESTRICT
 );
+
+
+INSERT INTO category (name) VALUES ('No Category');
+
+INSERT INTO category (name) VALUES
+  ('Headphones'),
+  ('Earbuds'),
+  ('Soundbars'),
+  ('Speakers'),
+  ('Turntables');
