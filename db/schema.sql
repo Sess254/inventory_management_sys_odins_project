@@ -1,0 +1,13 @@
+CREATE TABLE category (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE product (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT NOT NULL,
+  price NUMERIC(10, 2) NOT NULL CHECK (price >= 0),
+  stock INTEGER NOT NULL CHECK (stock >= 0),
+  category_id INTEGER NOT NULL REFERENCES category(id) ON DELETE RESTRICT
+);
